@@ -5,7 +5,7 @@ using FunBrainInfrastructure.Models;
 
 namespace FunBrainInfrastructure.Repositories
 {
-    public class UserRepositoryInMemory: IUserRepository
+    public class UserRepositoryInMemory : IUserRepository
     {
         public List<User> Users { get; set; } = new List<User>();
 
@@ -34,7 +34,7 @@ namespace FunBrainInfrastructure.Repositories
         }
 
         public User Update(User updateUser)
-        { 
+        {
             // First? or default?
             var userToUpdate = Users.FirstOrDefault(u => u.Id == updateUser.Id);
 

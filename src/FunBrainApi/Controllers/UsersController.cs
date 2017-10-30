@@ -1,33 +1,39 @@
 ﻿using System.Collections.Generic;
 using FunBrainDomain;
 using FunBrainInfrastructure;
+using FunBrainInfrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunBrainApi.Controllers
 {
+    [Route("api/users")]
     public class UsersController: Controller
     {
-        private readonly IUserRankingService _userRankingService;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(IUserRankingService userRankingService)
+        public UsersController(IUserRepository userRepository)
         {
-            _userRankingService = userRankingService;
+            _userRepository = userRepository;
         }
 
-        [HttpGet("api/gameInput")]
-        public IActionResult GetUserRanking()
+        [HttpGet]
+        public IActionResult GetUsers()
         {
-            var data = _userRankingService.Get();
+            var data = _userRepository.Get();
 
             return Ok(data);
         }
 
-        [HttpPost("api/rungame")]
-        public IActionResult RunGame([FromBody]IEnumerable<GameInput> gameInput)
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
         {
-            var result =_userRankingService.RunGame(gameInput);
+            var user = _userRepository.GetById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-            return Ok(result);
+            return Ok(user);
         }
     }
 }
