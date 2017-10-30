@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FunBrainDomain;
 using FunBrainInfrastructure.Models;
 
@@ -12,6 +8,16 @@ namespace FunBrainInfrastructure.Repositories
     public class UserRepositoryInMemory: IUserRepository
     {
         public List<User> Users { get; set; } = new List<User>();
+
+        public IEnumerable<User> Get()
+        {
+            return Users;
+        }
+
+        public User GetById(int id)
+        {
+            return Users.FirstOrDefault(u => u.Id == id);
+        }
 
         public User Create(UserCreate newUser)
         {
