@@ -23,7 +23,7 @@ namespace FunBrainInfrastructure.Repositories
         {
             var createdUser = new User
             {
-                Id = Users.Count,
+                Id = Users.Count + 1,
                 Name = newUser.Name,
                 Email = newUser.Email
             };

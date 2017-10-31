@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FunBrainDomain;
+using FunBrainInfrastructure.Models;
 
 namespace FunBrainInfrastructure.Repositories
 {
@@ -7,6 +8,7 @@ namespace FunBrainInfrastructure.Repositories
     {
         IEnumerable<User> Get();
         User GetById(int id);
+        User Create(UserCreate newUser);
         User Update(User updateUser);
         bool Delete(int userId);
     }

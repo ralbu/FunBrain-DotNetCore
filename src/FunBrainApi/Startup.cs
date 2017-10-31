@@ -25,7 +25,7 @@ namespace FunBrainApi
             services.AddTransient<IUserRankingService, UserRankingService>();
             services.AddTransient<IUserRankingRepository, UserRankingRepository>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
-            services.AddTransient<IUserRepository, UserRepositoryInMemory>();
+            services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
         }
 
 

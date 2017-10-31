@@ -25,7 +25,7 @@ namespace FunBrainApi.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{id}", Name="GetUserById")]
+        [HttpGet("{id}", Name="GetUser")]
         public IActionResult GetUserById(int id)
         {
             var user = _userRepository.GetById(id);
@@ -48,8 +48,9 @@ namespace FunBrainApi.Controllers
             {
                 return BadRequest("User name is empty");
             }
+            var createdUser = _userRepository.Create(newUser);
 
-            return CreatedAtRoute("GetUserById", new {user = 1});
+            return CreatedAtRoute("GetUser", new {id = createdUser.Id }, createdUser);
         }
     }
 }
