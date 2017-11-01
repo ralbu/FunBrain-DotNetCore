@@ -1,0 +1,93 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FunBrain",
+		"_postman_id": "4075f049-e203-abc2-4904-580d378daa38",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"request": {
+				"url": "http://localhost:64884/api/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"url": "http://localhost:64884/api/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Name\":\"user\", \"Email\":\"my@email.com\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"url": "http://localhost:64884/api/users",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":22, \"name\":\"user updated\", \"email\":\"my@email.com\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Partial Update User",
+			"request": {
+				"url": "http://localhost:64884/api/users/2",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\"op\":\"replace\",\n\"path\":\"/name\",\n\"value\":\"new user 2\"\n},\n{\n\t\"op\":\"remove\",\n\t\"path\":\"/email\"\n}\n]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"url": "http://localhost:64884/api/users/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

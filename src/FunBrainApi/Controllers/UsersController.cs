@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FunBrainDomain;
 using FunBrainInfrastructure;
 using FunBrainInfrastructure.Models;
 using FunBrainInfrastructure.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunBrainApi.Controllers
@@ -51,6 +53,59 @@ namespace FunBrainApi.Controllers
             var createdUser = _userRepository.Create(newUser);
 
             return CreatedAtRoute("GetUser", new {id = createdUser.Id }, createdUser);
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] UserUpdate updateUser)
+        {
+            var updatedUser = _userRepository.Update(updateUser);
+
+            if (updatedUser == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}") ]
+        public IActionResult PartiallyUpdate(int id, [FromBody]JsonPatchDocument<UserUpdate> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
+
+            var userFromStore = _userRepository.Get().FirstOrDefault(u => u.Id == id);
+            if (userFromStore == null)
+            {
+                return NotFound();
+            }
+
+            var userToPatch = new UserUpdate
+            {
+                Name = userFromStore.Name,
+                Email = userFromStore.Email
+            };
+
+            patchDoc.ApplyTo(userToPatch);
+            userToPatch.Id = id;
+
+            _userRepository.Update(userToPatch);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var deleted = _userRepository.Delete(id);
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

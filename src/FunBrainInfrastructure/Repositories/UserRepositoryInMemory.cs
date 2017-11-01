@@ -33,10 +33,20 @@ namespace FunBrainInfrastructure.Repositories
             return createdUser;
         }
 
-        public User Update(User updateUser)
+        public User Update(UserUpdate updateUser)
         {
+            if (updateUser == null)
+            {
+                return null;
+            }
+
             // First? or default?
             var userToUpdate = Users.FirstOrDefault(u => u.Id == updateUser.Id);
+
+            if (userToUpdate == null)
+            {
+                return null;
+            }
 
             userToUpdate.Name = updateUser.Name;
             userToUpdate.Email = updateUser.Email;
