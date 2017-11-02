@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 
@@ -16,16 +17,48 @@ namespace FunBrainApi
 {
     public class Startup
     {
+        public static IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+//            configuration["appSettings.json"];
+//            var builder = new ConfigurationBuilder()
+//                .SetBasePath(env.ContentRootPath)
+//                .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true);
+
+//            Configuration = builder.Build();
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
+            SetupIoC(services);
+        }
+
+        private void SetupIoC(IServiceCollection services)
+        {
             services.AddTransient<IUserRankingService, UserRankingService>();
             services.AddTransient<IUserRankingRepository, UserRankingRepository>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
-            services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
+
+            var iocContainerType = Configuration["appSettings:ioccontainer"];
+            if (String.IsNullOrWhiteSpace(iocContainerType))
+            {
+                throw new NullReferenceException("Container type in appSetings not found.");
+            }
+
+            switch (iocContainerType)
+            {
+                case "memory":
+                    services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Can't resolve DI for the type '{iocContainerType}. Check the appSettings file.");
+            }
         }
 
 
