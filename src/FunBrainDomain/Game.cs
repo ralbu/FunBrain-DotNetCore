@@ -10,6 +10,23 @@ namespace FunBrainDomain
     {
         private readonly IRandomGenerator _randomGenerator;
 
+        public Game()
+        {
+        }
+
+        public int Rounds { get; private set; }
+
+        public void Create(int noOfRounds)
+        {
+            if (noOfRounds <= 0)
+            {
+                throw new ArgumentException("Number of rounds should be greater than zero.");
+            }
+
+            Rounds = noOfRounds;
+        }
+
+
         public Game(IRandomGenerator randomGenerator)
         {
             _randomGenerator = randomGenerator;

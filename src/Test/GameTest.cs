@@ -8,6 +8,24 @@ namespace Test
     public class GameTest
     {
         [Fact]
+        public void WhenCreatingNewGame_ThenDoNotAllowZeroRounds()
+        {
+            var game = new Game();
+            Assert.Throws<ArgumentException>(() => game.Create(0));
+        }
+
+        [Fact]
+        public void WhenCreatingNewGame_ThenShouldAcceptNoOfRounds()
+        {
+            var expectedRounds = 5;
+            var game = new Game();
+            game.Create(expectedRounds);
+
+            Assert.Equal(expectedRounds, game.Rounds);
+        }
+
+
+        [Fact]
         public void Game()
         {
             var game = new Game(new RandomGeneratorStub(3));
