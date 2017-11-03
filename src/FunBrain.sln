@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunBrainConsole", "FunBrainConsole\FunBrainConsole.csproj", "{EF1670C1-A4B5-4D89-9E69-D5D1B731CF29}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunBrainInfrastructure", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{F8EC6C3F-E761-4200-8157-6F7A3B7ED915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunBrainApi", "FunBrainApi\FunBrainApi.csproj", "{9180FB9E-9C5A-4776-9C66-CFC01B895BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunBrainApi", "FunBrainApi\FunBrainApi.csproj", "{9180FB9E-9C5A-4776-9C66-CFC01B895BF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunBrainEFPersistence", "FunBrainEFPersistence\FunBrainEFPersistence.csproj", "{493EE95E-1026-4120-BAC1-975649796988}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9180FB9E-9C5A-4776-9C66-CFC01B895BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9180FB9E-9C5A-4776-9C66-CFC01B895BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9180FB9E-9C5A-4776-9C66-CFC01B895BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{493EE95E-1026-4120-BAC1-975649796988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{493EE95E-1026-4120-BAC1-975649796988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{493EE95E-1026-4120-BAC1-975649796988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{493EE95E-1026-4120-BAC1-975649796988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
