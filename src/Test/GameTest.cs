@@ -39,12 +39,17 @@ namespace Test
         }
 
         [Fact]
-        public void WhenStartARound()
+        public void WhenRunTheGame_ThenNoOfRoundsLeftShouldBeLessByOne()
         {
             var rounds = 1;
             var game = new Game();
-//            game.Create(rounds);
             game.Start(rounds, 1, null);
+
+//            var usersInGame = new UserGame
+//            {
+                
+//            };
+//            game.Run()
         }
 
 
