@@ -8,20 +8,43 @@ namespace Test
     public class GameTest
     {
         [Fact]
-        public void WhenCreatingNewGame_ThenDoNotAllowZeroRounds()
+        public void WhenStartingNewGame_ThenDoNotAllowZeroRounds()
         {
             var game = new Game();
-            Assert.Throws<ArgumentException>(() => game.Create(0));
+            var guessMaxAnonymous = 1;
+            var rounds = 0;
+
+            Assert.Throws<ArgumentException>(() => game.Start(rounds, guessMaxAnonymous, null));
         }
 
         [Fact]
-        public void WhenCreatingNewGame_ThenShouldAcceptNoOfRounds()
+        public void WhenStartingNewGame_ThenDoNotAllowZeroMaxGuessNo()
+        {
+            var game = new Game();
+            var guessMax = 0;
+            var roundsAnonymous = 1;
+
+            Assert.Throws<ArgumentException>(() => game.Start(roundsAnonymous, guessMax, null));
+        }
+
+        [Fact]
+        public void WhenStartingNewGame_ThenShouldAcceptNoOfRounds()
         {
             var expectedRounds = 5;
+            var guessMaxAnonymous = 10;
             var game = new Game();
-            game.Create(expectedRounds);
+            game.Start(expectedRounds, guessMaxAnonymous, null);
 
             Assert.Equal(expectedRounds, game.Rounds);
+        }
+
+        [Fact]
+        public void WhenStartARound()
+        {
+            var rounds = 1;
+            var game = new Game();
+//            game.Create(rounds);
+            game.Start(rounds, 1, null);
         }
 
 
