@@ -38,16 +38,22 @@ namespace Test
             Assert.Equal(expectedRounds, game.Rounds);
         }
 
-        [Fact]
-        public void WhenRunTheGame_ThenNoOfRoundsLeftShouldBeLessByOne()
+        [Theory]
+        [InlineData(4, 3)]
+        [InlineData(1, 0)]
+        [InlineData(148947243, 148947242)]
+        public void WhenRunTheGame_ThenNoOfRoundsLeftShouldBeLessByOne(int totalRounds, int expectedRounds)
         {
-            var rounds = 1;
-            var game = new Game();
-            game.Start(rounds, 1, null);
+//            var rounds = 2;
+//            var expectedRounds = rounds - 1;
+            var sut = new Game(new RandomGeneratorStub(5));
+            sut.Start(totalRounds, 1, null);
+            var actualResult = sut.Run(new List<UserGame>{new UserGame(1, 2)});
+            Assert.Equal(expectedRounds, actualResult.RoundsLeft);
 
 //            var usersInGame = new UserGame
 //            {
-                
+
 //            };
 //            game.Run()
         }

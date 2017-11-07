@@ -29,11 +29,13 @@ namespace FunBrainDomain
 
 
             Rounds = noOfRounds;
+            RoundsLeft = noOfRounds;
             _maxGuessNo = maxGuessNo;
             _usersInGame = usersInGame;
         }
 
         public int Rounds { get; private set; }
+        public int RoundsLeft { get; private set; }
 
 
         public Game(IRandomGenerator randomGenerator)
@@ -41,7 +43,7 @@ namespace FunBrainDomain
             _randomGenerator = randomGenerator;
         }
 
-        public GameResult Run(IEnumerable<UserGame> userGames)
+        public RoundResult Run(IEnumerable<UserGame> userGames)
         {
             var randomNumber = _randomGenerator.Generate();
 
@@ -56,7 +58,8 @@ namespace FunBrainDomain
                 .First();
 
 
-            return new GameResult(winner.Id, randomNumber);
+            RoundsLeft--;
+            return new RoundResult(winner.Id, randomNumber, RoundsLeft);
         }
     }
 }
