@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "FunBrain",
-		"_postman_id": "4075f049-e203-abc2-4904-580d378daa38",
+		"_postman_id": "e58bf763-216b-e6eb-1523-2f4ee05ce0b0",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -13,7 +13,10 @@
 				"url": "http://localhost:64884/api/users",
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": ""
 			},
 			"response": []
@@ -84,7 +87,50 @@
 				"url": "http://localhost:64884/api/users/1",
 				"method": "DELETE",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Start Game",
+			"request": {
+				"url": "http://localhost:64884/api/game/start",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"noofrounds\": 1,\n\t\"maxguessno\": 2,\n\t\"usersingame\": [1, 2]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Run Game",
+			"request": {
+				"url": "http://localhost:64884/api/game/run",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"userid\":1,\n\t\"number\": 19\n},\n{\n\t\"userid\": 2,\n\t\"number\": 44\n}]\n"
+				},
 				"description": ""
 			},
 			"response": []
