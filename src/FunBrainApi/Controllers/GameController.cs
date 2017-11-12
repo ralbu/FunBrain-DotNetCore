@@ -11,6 +11,12 @@ namespace FunBrainApi.Controllers
     [Route("api/game")]
     public class GameController: Controller
     {
+        private readonly IGameService _gameService;
+
+        public GameController(IGameService gameService)
+        {
+            _gameService = gameService;
+        }
 
         public IActionResult Get()
         {
@@ -21,14 +27,23 @@ namespace FunBrainApi.Controllers
         [HttpPost("start")]
         public IActionResult Start([FromBody] GameInput gameInput)
         {
-            return Ok(gameInput);
+            var gameId = _gameService.StartGame(gameInput);
+
+            // add created ad root
+            return Ok(gameId);
         }
 
 
-        [HttpPost("run")]
-        public IActionResult Run([FromBody] IEnumerable<UserInGame> usersInGame)
+        [HttpPost("run/{gameId}")]
+        public IActionResult Run(Guid gameId, [FromBody] IEnumerable<UserInGame> usersInGame)
         {
-            return Ok(usersInGame);
+            var roundResult = _gameService.RunGame(gameId, usersInGame);
+            if (roundResult == null)
+            {
+                return NotFound($"Game {gameId} not found.");
+            }
+
+            return Ok(roundResult);
         }
     }
 }

@@ -1,5 +1,6 @@
 using FunBrainDomain;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace Test
             var guessMaxAnonymous = 1;
             var rounds = 0;
 
-            Assert.Throws<ArgumentException>(() => game.Start(rounds, guessMaxAnonymous, null));
+            Assert.Throws<ArgumentException>(() => game.Start(rounds, guessMaxAnonymous, new List<int>()));
         }
 
         [Fact]
@@ -24,7 +25,7 @@ namespace Test
             var guessMax = 0;
             var roundsAnonymous = 1;
 
-            Assert.Throws<ArgumentException>(() => game.Start(roundsAnonymous, guessMax, null));
+            Assert.Throws<ArgumentException>(() => game.Start(roundsAnonymous, guessMax, new List<int>())); //List<int> can be null
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace Test
             var expectedRounds = 5;
             var guessMaxAnonymous = 10;
             var game = new Game();
-            game.Start(expectedRounds, guessMaxAnonymous, null);
+            game.Start(expectedRounds, guessMaxAnonymous, new List<int>()); // null last param
 
             Assert.Equal(expectedRounds, game.Rounds);
         }
@@ -47,7 +48,7 @@ namespace Test
 //            var rounds = 2;
 //            var expectedRounds = rounds - 1;
             var sut = new Game(new RandomGeneratorStub(5));
-            sut.Start(totalRounds, 1, null);
+            sut.Start(totalRounds, 1, new List<int>()); // null last param
             var actualResult = sut.Run(new List<UserGame>{new UserGame(1, 2)});
             Assert.Equal(expectedRounds, actualResult.RoundsLeft);
 

@@ -10,10 +10,31 @@ namespace FunBrainDomain
     {
         private readonly IRandomGenerator _randomGenerator;
         private int _maxGuessNo;
-        private IEnumerable<User> _usersInGame;
+        private IEnumerable<User> _usersInGameObsolete;
+        private IEnumerable<int> _usersInGame;
 
         public Game()
         {
+        }
+
+        public Guid Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
+        {
+            if (noOfRounds <= 0)
+            {
+                throw new ArgumentException("Number of rounds should be greater than zero.");
+            }
+            if (maxGuessNo <= 0)
+            {
+                throw new ArgumentException("Max Guess No should be greater than zero.");
+            }
+
+
+            Rounds = noOfRounds;
+            RoundsLeft = noOfRounds;
+            _maxGuessNo = maxGuessNo;
+            _usersInGame = usersInGame;
+
+            return Guid.NewGuid();
         }
 
         public void Start(int noOfRounds, int maxGuessNo, IEnumerable<User> usersInGame)
@@ -31,7 +52,7 @@ namespace FunBrainDomain
             Rounds = noOfRounds;
             RoundsLeft = noOfRounds;
             _maxGuessNo = maxGuessNo;
-            _usersInGame = usersInGame;
+            _usersInGameObsolete = usersInGame;
         }
 
         public int Rounds { get; private set; }
