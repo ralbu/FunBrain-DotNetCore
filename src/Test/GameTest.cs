@@ -44,19 +44,21 @@ namespace Test
         [InlineData(148947243, 148947242)]
         public void WhenRunTheGame_ThenNoOfRoundsLeftShouldBeLessByOne(int totalRounds, int expectedRounds)
         {
-//            var rounds = 2;
-//            var expectedRounds = rounds - 1;
             var sut = new Game(new RandomGeneratorStub(5));
             sut.Start(totalRounds, 1, null);
             var actualResult = sut.Run(new List<UserGame>{new UserGame(1, 2)});
+
             Assert.Equal(expectedRounds, actualResult.RoundsLeft);
-
-//            var usersInGame = new UserGame
-//            {
-
-//            };
-//            game.Run()
         }
+
+        [Fact] // This test already above
+        public void WhenRunTheGame_ThenTotalNoOfRoundsShouldNotChange()
+        {
+           var sut = new Game(new RandomGeneratorStub(1)); 
+            sut.Start(5, 1, null);
+            var actualResult = sut.Run(new List<UserGame> {new UserGame(1, 2)});
+        }
+
 
 
         [Fact]
