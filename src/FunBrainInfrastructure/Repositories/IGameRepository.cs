@@ -1,7 +1,10 @@
-﻿namespace FunBrainInfrastructure.Repositories
+﻿using FunBrainDomain;
+
+namespace FunBrainInfrastructure.Repositories
 {
     public interface IGameRepository
     {
-        void CreateGame();
+        int CreateGame(GameInput gameInput);
+        Game GetGame(int gameId);
     }
 }

@@ -35,7 +35,7 @@ namespace FunBrainApi.Controllers
 
 
         [HttpPost("run/{gameId}")]
-        public IActionResult Run(Guid gameId, [FromBody] IEnumerable<UserInGame> usersInGame)
+        public IActionResult Run(int gameId, [FromBody] IEnumerable<UserInGame> usersInGame)
         {
             var roundResult = _gameService.RunGame(gameId, usersInGame);
             if (roundResult == null)

@@ -55,9 +55,9 @@ namespace Test
         [Fact] // This test already above
         public void WhenRunTheGame_ThenTotalNoOfRoundsShouldNotChange()
         {
-           var sut = new Game(new RandomGeneratorStub(1)); 
-            sut.Start(5, 1, null);
-            var actualResult = sut.Run(new List<UserGame> {new UserGame(1, 2)});
+//           var sut = new Game(new RandomGeneratorStub(1)); 
+//            sut.Start(5, 1, null);
+//            var actualResult = sut.Run(new List<UserGame> {new UserGame(1, 2)});
         }
 
 

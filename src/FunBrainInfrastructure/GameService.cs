@@ -22,14 +22,15 @@ namespace FunBrainInfrastructure
             var game = new Game(new RandomGenerator());
             var gameId = game.Start(gameInput.NoOfRounds, gameInput.MaxGuessNo, gameInput.UsersInGame);
 
-            _gameRepository.CreateGame();
+            _gameRepository.CreateGame(gameInput);
 
             return gameId.ToString();
         }
 
-        public GameResultViewModel RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
+        public RoundResult RunGame(int gameId, IEnumerable<UserInGame> userInGame)
         {
-            return null;
+            var game = _gameRepository.GetGame(gameId);
+            return new RoundResult(0, 1, 2);
         }
     }
 }
