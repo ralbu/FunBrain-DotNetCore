@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FunBrainDomain;
 using FunBrainInfrastructure.Repositories;
 
-namespace FunBrainInfrastructure
+namespace FunBrainInfrastructure.Application
 {
     public class GameService : IGameService
     {
@@ -17,12 +13,12 @@ namespace FunBrainInfrastructure
             _gameRepository = gameRepository;
         }
 
-        public string StartGame(GameInput gameInput)
+        public string Create(NewGameRequest newGameRequest)
         {
             var game = new Game(new RandomGenerator());
-            var gameId = game.Start(gameInput.NoOfRounds, gameInput.MaxGuessNo, gameInput.UsersInGame);
+            var gameId = game.Start(newGameRequest.NoOfRounds, newGameRequest.MaxGuessNo, newGameRequest.UsersInGame);
 
-            _gameRepository.CreateGame(gameInput);
+            _gameRepository.CreateGame(newGameRequest);
 
             return gameId.ToString();
         }

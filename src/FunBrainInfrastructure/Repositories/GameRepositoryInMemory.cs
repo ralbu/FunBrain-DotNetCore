@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FunBrainDomain;
+using FunBrainInfrastructure.Application;
 
 namespace FunBrainInfrastructure.Repositories
 {
 
     public class GameRepositoryInMemory : IGameRepository
     {
-        private readonly List<GameInput> _games = new List<GameInput>();
+        private readonly List<NewGameRequest> _games = new List<NewGameRequest>();
         private int _gameCount = 0;
 
 
-        public int CreateGame(GameInput gameInput)
+        public int CreateGame(NewGameRequest newGameRequest)
         {
-            _games.Add(gameInput);
+            _games.Add(newGameRequest);
             _gameCount++;
 
             return _gameCount;
@@ -24,7 +25,8 @@ namespace FunBrainInfrastructure.Repositories
 
         public Game GetGame(int gameId)
         {
-            _games.SingleOrDefault(g => g.)
+            return null;
+//            _games.SingleOrDefault(g => g.)
         }
     }
 }

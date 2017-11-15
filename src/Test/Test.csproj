@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FunBrainDomain\FunBrainDomain.csproj" />
+    <ProjectReference Include="..\FunBrainEFPersistence\FunBrainEFPersistence.csproj" />
+    <ProjectReference Include="..\FunBrainInfrastructure\FunBrainInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>

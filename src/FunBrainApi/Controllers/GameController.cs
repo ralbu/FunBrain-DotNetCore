@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FunBrainInfrastructure;
+using FunBrainInfrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunBrainApi.Controllers
@@ -25,9 +26,9 @@ namespace FunBrainApi.Controllers
 
 
         [HttpPost("start")]
-        public IActionResult Start([FromBody] GameInput gameInput)
+        public IActionResult Start([FromBody] NewGameRequest newGameRequest)
         {
-            var gameId = _gameService.StartGame(gameInput);
+            var gameId = _gameService.Create(newGameRequest);
 
             // add created ad root
             return Ok(gameId);

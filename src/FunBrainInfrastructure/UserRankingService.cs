@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FunBrainDomain;
+using FunBrainInfrastructure.Application;
 
 namespace FunBrainInfrastructure
 {
     public interface IUserRankingService
     {
         IEnumerable<UserRanking> Get();
-        GameResultViewModel RunGame(IEnumerable<GameInput> gameInputs);
+        GameResultViewModel RunGame(IEnumerable<NewGameRequest> gameInputs);
     }
 
     public class UserRankingService : IUserRankingService
@@ -26,11 +27,11 @@ namespace FunBrainInfrastructure
             return _repository.Get();
         }
 
-        public GameResultViewModel RunGame(IEnumerable<GameInput> gameInputs)
+        public GameResultViewModel RunGame(IEnumerable<NewGameRequest> gameInputs)
         {
             var game = new Game(_randomGenerator);
 
-            var result = game.Run(GameInput.ToUserGame(gameInputs));
+            var result = game.Run(NewGameRequest.ToUserGame(gameInputs));
             _repository.UpdateWinner(result.WinnerId);
 
             var allUsers = _repository.Get();

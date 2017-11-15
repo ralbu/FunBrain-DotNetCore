@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FunBrainInfrastructure;
+using FunBrainInfrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunBrainApi.Controllers
@@ -23,7 +24,7 @@ namespace FunBrainApi.Controllers
         }
 
         [HttpPost("api/rungame")]
-        public IActionResult RunGame([FromBody]IEnumerable<GameInput> gameInput)
+        public IActionResult RunGame([FromBody]IEnumerable<NewGameRequest> gameInput)
         {
             var result =_userRankingService.RunGame(gameInput);
 

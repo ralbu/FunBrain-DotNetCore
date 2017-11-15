@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FunBrainDomain;
 using FunBrainInfrastructure;
+using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

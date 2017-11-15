@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FunBrainDomain;
 
-namespace FunBrainInfrastructure
+namespace FunBrainInfrastructure.Application
 {
-    public class GameInput
+    public class NewGameRequest
     {
         public int NoOfRounds { get; set; }
         public int MaxGuessNo { get; set; }
         public IEnumerable<int> UsersInGame { get; set; }
 
-        public static IEnumerable<UserGame> ToUserGame(IEnumerable<GameInput> inputs)
+
+        public static IEnumerable<UserGame> ToUserGame(IEnumerable<NewGameRequest> inputs)
         {
             return null;
 //            return inputs.Select(input => new UserGame(input.Id, input.Number));
