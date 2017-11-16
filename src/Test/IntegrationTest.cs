@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FunBrainInfrastructure;
@@ -16,8 +17,10 @@ namespace Test
         public void Test()
         {
             var gameRepository = new GameRepositoryInMemory();
+            var randomGeneratorStub = new RandomGeneratorStub(10);
+            var unitOfWorkStub = new UnitOfWorkStub();
 
-            var gameService = new GameService(gameRepository);
+            var gameService = new GameService(gameRepository, randomGeneratorStub, unitOfWorkStub);
 
             var newGameRequest = new NewGameRequest
             {
@@ -28,6 +31,11 @@ namespace Test
 
 
             var gameId = gameService.Create(newGameRequest);
+
+            Assert.NotNull(gameId);
+
+
+
 
         }
     }

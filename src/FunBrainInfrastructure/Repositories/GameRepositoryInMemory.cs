@@ -11,22 +11,21 @@ namespace FunBrainInfrastructure.Repositories
 
     public class GameRepositoryInMemory : IGameRepository
     {
-        private readonly List<NewGameRequest> _games = new List<NewGameRequest>();
+        private readonly List<Game> _games = new List<Game>();
         private int _gameCount = 0;
 
 
-        public int CreateGame(NewGameRequest newGameRequest)
+        public int CreateGame(Game game)
         {
-            _games.Add(newGameRequest);
+            _games.Add(game);
             _gameCount++;
 
             return _gameCount;
         }
 
-        public Game GetGame(int gameId)
+        public Game GetGame(Guid gameId)
         {
-            return null;
-//            _games.SingleOrDefault(g => g.)
+            return _games.SingleOrDefault(g => g.Id == gameId);
         }
     }
 }

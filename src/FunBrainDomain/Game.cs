@@ -13,11 +13,29 @@ namespace FunBrainDomain
         private IEnumerable<User> _usersInGameObsolete;
         private IEnumerable<int> _usersInGame;
 
+        // TODO: Do I need this?
         public Game()
         {
         }
 
-        public Guid Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
+        // TODO: delete later
+        public Game(IRandomGenerator randomGenerator)
+        {
+            _randomGenerator = randomGenerator;
+        }
+
+        public Game(Guid gameId, IRandomGenerator randomGenerator)
+        {
+            Id = gameId;
+            _randomGenerator = randomGenerator;
+        }
+
+
+        public int Rounds { get; private set; }
+        public int RoundsLeft { get; private set; }
+        public Guid Id { get; set; }
+
+        public void Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
         {
             if (noOfRounds <= 0)
             {
@@ -31,10 +49,9 @@ namespace FunBrainDomain
 
             Rounds = noOfRounds;
             RoundsLeft = noOfRounds;
+            Id = Guid.NewGuid();
             _maxGuessNo = maxGuessNo;
             _usersInGame = usersInGame;
-
-            return Guid.NewGuid();
         }
 
         public void Start(int noOfRounds, int maxGuessNo, IEnumerable<User> usersInGame)
@@ -55,14 +72,6 @@ namespace FunBrainDomain
             _usersInGameObsolete = usersInGame;
         }
 
-        public int Rounds { get; private set; }
-        public int RoundsLeft { get; private set; }
-
-
-        public Game(IRandomGenerator randomGenerator)
-        {
-            _randomGenerator = randomGenerator;
-        }
 
         public RoundResult Run(IEnumerable<UserGame> userGames)
         {
