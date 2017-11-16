@@ -45,7 +45,7 @@ namespace FunBrainApi
             services.AddTransient<IUserRankingService, UserRankingService>();
             services.AddTransient<IUserRankingRepository, UserRankingRepository>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
-            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<GameService>();
 
             var iocContainerType = Configuration["appSettings:ioccontainer"];
             if (String.IsNullOrWhiteSpace(iocContainerType))

@@ -36,15 +36,16 @@ namespace FunBrainApi.Controllers
 
 
         [HttpPost("run/{gameId}")]
-        public IActionResult Run(int gameId, [FromBody] IEnumerable<UserInGame> usersInGame)
+        public IActionResult Run(int gameId, [FromBody] IEnumerable<UserInGameObsolete> usersInGame)
         {
-            var roundResult = _gameService.RunGame(gameId, usersInGame);
-            if (roundResult == null)
-            {
-                return NotFound($"Game {gameId} not found.");
-            }
+//            var roundResult = _gameService.RunGame(gameId, usersInGame);
+//            if (roundResult == null)
+//            {
+//                return NotFound($"Game {gameId} not found.");
+//            }
 
-            return Ok(roundResult);
+//            return Ok(roundResult);
+            return Ok();
         }
     }
 }

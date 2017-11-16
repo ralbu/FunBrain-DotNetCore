@@ -10,10 +10,10 @@ namespace FunBrainInfrastructure.Application
         public IEnumerable<int> UsersInGame { get; set; }
 
 
-        public static IEnumerable<UserGame> ToUserGame(IEnumerable<NewGameRequest> inputs)
+        public static IEnumerable<UserInGame> ToUserGame(IEnumerable<NewGameRequest> inputs)
         {
             return null;
-//            return inputs.Select(input => new UserGame(input.Id, input.Number));
+//            return inputs.Select(input => new UserInGame(input.UserId, input.Number));
         }
     }
 }

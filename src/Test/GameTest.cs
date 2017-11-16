@@ -47,7 +47,7 @@ namespace Test
         {
             var sut = new Game(new RandomGeneratorStub(5));
             sut.Start(totalRounds, 1, new List<int>()); // null last param
-            var actualResult = sut.Run(new List<UserGame>{new UserGame(1, 2)});
+            var actualResult = sut.Run(new List<UserInGame>{new UserInGame(1, 2)});
 
             Assert.Equal(expectedRounds, actualResult.RoundsLeft);
         }
@@ -57,7 +57,7 @@ namespace Test
         {
 //           var sut = new Game(new RandomGeneratorStub(1)); 
 //            sut.Start(5, 1, null);
-//            var actualResult = sut.Run(new List<UserGame> {new UserGame(1, 2)});
+//            var actualResult = sut.Run(new List<UserInGame> {new UserInGame(1, 2)});
         }
 
 
@@ -66,10 +66,10 @@ namespace Test
         public void Game()
         {
             var game = new Game(new RandomGeneratorStub(3));
-            var userGames = new List<UserGame>
+            var userGames = new List<UserInGame>
             {
-                new UserGame(1, 4),
-                new UserGame(2, 8)
+                new UserInGame(1, 4),
+                new UserInGame(2, 8)
             };
 
             var actuaResult = game.Run(userGames);
@@ -81,13 +81,13 @@ namespace Test
         public void Game2()
         {
             var game = new Game(new RandomGeneratorStub(81));
-            var userGames = new List<UserGame>
+            var userGames = new List<UserInGame>
             {
-                new UserGame(1, 14),
-                new UserGame(2, 20),
-                new UserGame(3, 50),
-                new UserGame(4, 1),
-                new UserGame(5, 98)
+                new UserInGame(1, 14),
+                new UserInGame(2, 20),
+                new UserInGame(3, 50),
+                new UserInGame(4, 1),
+                new UserInGame(5, 98)
             };
 
             var actuaResult = game.Run(userGames);

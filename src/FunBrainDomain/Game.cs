@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FunBrainDomain
 {
+
     public class Game
     {
         private readonly IRandomGenerator _randomGenerator;
@@ -49,7 +50,6 @@ namespace FunBrainDomain
 
             Rounds = noOfRounds;
             RoundsLeft = noOfRounds;
-            Id = Guid.NewGuid();
             _maxGuessNo = maxGuessNo;
             _usersInGame = usersInGame;
         }
@@ -73,7 +73,7 @@ namespace FunBrainDomain
         }
 
 
-        public RoundResult Run(IEnumerable<UserGame> userGames)
+        public RoundResult Run(IEnumerable<UserInGame> userGames)
         {
             var randomNumber = _randomGenerator.Generate();
 
@@ -81,7 +81,7 @@ namespace FunBrainDomain
                 .Select(u =>
                     new
                     {
-                        Id = u.Id,
+                        Id = u.UserId,
                         Diff = Math.Abs(u.Number - randomNumber)
                     })
                 .OrderBy(a => a.Diff)

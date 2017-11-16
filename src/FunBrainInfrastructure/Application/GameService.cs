@@ -5,7 +5,7 @@ using FunBrainInfrastructure.Repositories;
 
 namespace FunBrainInfrastructure.Application
 {
-    public class GameService : IGameService
+    public class GameService// : IGameService
     {
         private readonly IGameRepository _gameRepository;
         private readonly IRandomGenerator _randomGenerator;
@@ -18,7 +18,7 @@ namespace FunBrainInfrastructure.Application
             _unitOfWork = unitOfWork;
         }
 
-        public string Create(NewGameRequest command)
+        public Guid Create(NewGameRequest command)
         {
             var gameId = Guid.NewGuid();
             var game = new Game(gameId, _randomGenerator);
@@ -29,7 +29,7 @@ namespace FunBrainInfrastructure.Application
 
             _unitOfWork.Commit();
 
-            return gameId.ToString();
+            return gameId;
         }
 
         public RoundResult RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
@@ -40,6 +40,11 @@ namespace FunBrainInfrastructure.Application
             {
                 throw new GameNotFoundException();
             }
+
+            game.Run(userInGame);
+
+            // save game
+            // save round
 
             return new RoundResult(0, 1, 2);
         }

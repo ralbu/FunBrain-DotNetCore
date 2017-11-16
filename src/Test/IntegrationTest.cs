@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using FunBrainDomain;
 using FunBrainInfrastructure;
 using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
@@ -32,7 +33,17 @@ namespace Test
 
             var gameId = gameService.Create(newGameRequest);
 
-            Assert.NotNull(gameId);
+            Assert.NotEqual(Guid.Empty, gameId);
+
+            //NEw test
+
+            var usersInGame = new UserInGame[]
+            {
+                new UserInGame(1, 5),
+                new UserInGame (2, 20)
+            };
+
+            gameService.RunGame(gameId, usersInGame);
 
 
 
