@@ -43,11 +43,9 @@ namespace Test
                 new UserInGame (2, 20)
             };
 
-            gameService.RunGame(gameId, usersInGame);
+            var roundResult = gameService.RunGame(gameId, usersInGame);
 
-
-
-
+            Assert.NotNull(roundResult);
         }
     }
 }

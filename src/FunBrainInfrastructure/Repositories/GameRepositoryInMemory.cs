@@ -23,9 +23,13 @@ namespace FunBrainInfrastructure.Repositories
             return _gameCount;
         }
 
-        public Game GetGame(Guid gameId)
+        public Game FindById(Guid gameId)
         {
             return _games.SingleOrDefault(g => g.Id == gameId);
+        }
+
+        public void UpdateGame(Game game)
+        {
         }
     }
 }

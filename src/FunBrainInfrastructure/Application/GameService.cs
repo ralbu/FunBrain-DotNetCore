@@ -32,21 +32,23 @@ namespace FunBrainInfrastructure.Application
             return gameId;
         }
 
-        public RoundResult RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
+        public Round RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
         {
-            var game = _gameRepository.GetGame(gameId);
+            var game = _gameRepository.FindById(gameId);
 
             if (game == null)
             {
                 throw new GameNotFoundException();
             }
 
-            game.Run(userInGame);
+            var round = game.Run(userInGame);
+
+
 
             // save game
             // save round
 
-            return new RoundResult(0, 1, 2);
+            return round;
         }
     }
 }

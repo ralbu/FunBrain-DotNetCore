@@ -34,6 +34,7 @@ namespace FunBrainDomain
 
         public int Rounds { get; private set; }
         public int RoundsLeft { get; private set; }
+        public int CurrentRound { get; set; }
         public Guid Id { get; set; }
 
         public void Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
@@ -73,7 +74,7 @@ namespace FunBrainDomain
         }
 
 
-        public RoundResult Run(IEnumerable<UserInGame> userGames)
+        public Round Run(IEnumerable<UserInGame> userGames)
         {
             var randomNumber = _randomGenerator.Generate();
 
@@ -87,9 +88,11 @@ namespace FunBrainDomain
                 .OrderBy(a => a.Diff)
                 .First();
 
+            CurrentRound++;
 
             RoundsLeft--;
-            return new RoundResult(winner.Id, randomNumber, RoundsLeft);
+
+            return new Round(this.Id, randomNumber, winner.Id, CurrentRound);
         }
     }
 }

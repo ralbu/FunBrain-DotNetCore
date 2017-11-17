@@ -7,6 +7,7 @@ namespace FunBrainInfrastructure.Repositories
     public interface IGameRepository
     {
         int CreateGame(Game game);
-        Game GetGame(Guid gameId);
+        Game FindById(Guid gameId);
+        void UpdateGame(Game game);
     }
 }

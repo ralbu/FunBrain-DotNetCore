@@ -37,7 +37,10 @@ namespace FunBrainInfrastructure
             var allUsers = _repository.Get();
             var userName = allUsers.Where(u => u.Id == result.WinnerId).Select(u => u.Name).Single();
 
-            return new GameResultViewModel(result.WinnerId, userName, result.RandomNumber);
+//            return new GameResultViewModel(result.WinnerId, userName, result.RandomNumber);
+            
+            // Fix this
+            return new GameResultViewModel(1, "", 1);
         }
     }
 }
