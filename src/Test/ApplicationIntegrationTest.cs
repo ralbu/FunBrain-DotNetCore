@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Test
 {
-    public class IntegrationTest
+    public class ApplicationIntegrationTest
     {
         [Fact]
         public void Test()
@@ -45,6 +45,7 @@ namespace Test
 
             var roundRepository = new RoundRepositoryInMemory();
             var roundOfGame = new RoundOfGame(gameRepository, roundRepository, unitOfWorkStub);
+
             var round = roundOfGame.RunGame(gameId, usersInGame);
 
             Assert.NotNull(round);
