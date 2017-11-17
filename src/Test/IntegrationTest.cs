@@ -43,9 +43,11 @@ namespace Test
                 new UserInGame (2, 20)
             };
 
-            var roundResult = gameService.RunGame(gameId, usersInGame);
+            var roundRepository = new RoundRepositoryInMemory();
+            var roundOfGame = new RoundOfGame(gameRepository, roundRepository, unitOfWorkStub);
+            var round = roundOfGame.RunGame(gameId, usersInGame);
 
-            Assert.NotNull(roundResult);
+            Assert.NotNull(round);
         }
     }
 }

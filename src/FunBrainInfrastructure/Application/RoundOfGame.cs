@@ -13,13 +13,13 @@ namespace FunBrainInfrastructure.Application
     {
         private readonly IGameRepository _gameRepository;
         private readonly IRoundRepository _roundRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RoundOfGame(IGameRepository gameRepository, IRoundRepository roundRepository, IUnitOfWork unitOfWork)
         {
             _gameRepository = gameRepository;
             _roundRepository = roundRepository;
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public Round RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
@@ -31,16 +31,14 @@ namespace FunBrainInfrastructure.Application
                 throw new GameNotFoundException();
             }
 
-            var roundsLeft = game.Run(userInGame);
+            var round = game.Run(userInGame);
 
-            _gameRepository.UpdateGame(game);
             _roundRepository.SaveRound();
 
+            _unitOfWork.Commit();
 
-            // save game
-            // save round
 
-            return roundsLeft;
+            return round;
         }
     }
 }

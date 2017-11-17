@@ -32,23 +32,5 @@ namespace FunBrainInfrastructure.Application
             return gameId;
         }
 
-        public Round RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
-        {
-            var game = _gameRepository.FindById(gameId);
-
-            if (game == null)
-            {
-                throw new GameNotFoundException();
-            }
-
-            var round = game.Run(userInGame);
-
-
-
-            // save game
-            // save round
-
-            return round;
-        }
     }
 }
