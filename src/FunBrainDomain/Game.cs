@@ -15,16 +15,18 @@ namespace FunBrainDomain
         private IEnumerable<int> _usersInGame;
 
         // TODO: Do I need this?
+        [Obsolete]
         public Game()
         {
         }
 
-        // TODO: delete later
         public Game(IRandomGenerator randomGenerator)
         {
+            Id = Guid.NewGuid();
             _randomGenerator = randomGenerator;
         }
 
+        [Obsolete]
         public Game(Guid gameId, IRandomGenerator randomGenerator)
         {
             Id = gameId;

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using FunBrainDomain;
-using FunBrainInfrastructure;
 using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
 using Xunit;

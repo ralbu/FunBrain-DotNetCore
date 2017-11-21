@@ -8,10 +8,20 @@ namespace Test
 {
     public class GameTest
     {
+        private Game CreateGame(IRandomGenerator randomGenerator = null)
+        {
+            if (randomGenerator == null)
+            {
+                randomGenerator = new RandomGeneratorStub(0);
+            }
+
+            return new Game(randomGenerator);
+        }
+
         [Fact]
         public void WhenStartingNewGame_ThenDoNotAllowZeroRounds()
         {
-            var game = new Game();
+            var game = CreateGame();
             var guessMaxAnonymous = 1;
             var rounds = 0;
 
@@ -21,11 +31,12 @@ namespace Test
         [Fact]
         public void WhenStartingNewGame_ThenDoNotAllowZeroMaxGuessNo()
         {
-            var game = new Game();
+            var game = CreateGame();
             var guessMax = 0;
             var roundsAnonymous = 1;
 
-            Assert.Throws<ArgumentException>(() => game.Start(roundsAnonymous, guessMax, new List<int>())); //List<int> can be null
+            Assert.Throws<ArgumentException>(() =>
+                game.Start(roundsAnonymous, guessMax, new List<int>())); //List<int> can be null
         }
 
         [Fact]
@@ -33,7 +44,7 @@ namespace Test
         {
             var expectedRounds = 5;
             var guessMaxAnonymous = 10;
-            var game = new Game();
+            var game = CreateGame();
             game.Start(expectedRounds, guessMaxAnonymous, new List<int>()); // null last param
 
             Assert.Equal(expectedRounds, game.Rounds);
@@ -43,11 +54,14 @@ namespace Test
         [InlineData(4, 3)]
         [InlineData(1, 0)]
         [InlineData(148947243, 148947242)]
-        public void WhenRunTheGame_ThenNoOfRoundsLeftShouldBeLessByOne(int totalRounds, int expectedRounds)
+        public void WhenRunTheGame_ThenCurrentRoundShouldIncrease(int totalRounds, int expectedRounds)
         {
             var sut = new Game(new RandomGeneratorStub(5));
             sut.Start(totalRounds, 1, new List<int>()); // null last param
-            var actualResult = sut.Run(new List<UserInGame>{new UserInGame(1, 2)});
+            var actualResult = sut.Run(new List<UserInGame> {new UserInGame(1, 2)});
+
+//            Assert.Equal(expectedRounds + 1, sut.CurrentRound);
+
 
             //TODO: fix this
 //            Assert.Equal(expectedRounds, actualResult.RoundsLeft);
@@ -60,7 +74,6 @@ namespace Test
 //            sut.Start(5, 1, null);
 //            var actualResult = sut.Run(new List<UserInGame> {new UserInGame(1, 2)});
         }
-
 
 
         [Fact]

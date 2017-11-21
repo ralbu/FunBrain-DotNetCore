@@ -20,6 +20,7 @@ namespace FunBrainDomain
             GameId = gameId;
             GuessNo = guessNo;
             WinnerId = winnerId;
+            RoundNo = roundNo;
         }
     }
 }

@@ -33,6 +33,8 @@ namespace FunBrainInfrastructure.Application
 
             var round = game.Run(userInGame);
 
+            // Update game because updating No of rounds
+            _gameRepository.UpdateGame(game);
             _roundRepository.SaveRound();
 
             _unitOfWork.Commit();

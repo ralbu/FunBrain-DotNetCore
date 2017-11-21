@@ -20,8 +20,7 @@ namespace FunBrainInfrastructure.Application
 
         public Guid Create(NewGameRequest command)
         {
-            var gameId = Guid.NewGuid();
-            var game = new Game(gameId, _randomGenerator);
+            var game = new Game(_randomGenerator);
 
             game.Start(command.NoOfRounds, command.MaxGuessNo, command.UsersInGame);
 
@@ -29,7 +28,7 @@ namespace FunBrainInfrastructure.Application
 
             _unitOfWork.Commit();
 
-            return gameId;
+            return game.Id;
         }
 
     }
