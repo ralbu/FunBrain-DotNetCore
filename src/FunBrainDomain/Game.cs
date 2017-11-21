@@ -37,6 +37,7 @@ namespace FunBrainDomain
         public int Rounds { get; private set; }
         public int RoundsLeft { get; private set; }
         public int CurrentRound { get; set; }
+        public User GameWinner { get; set; }
         public Guid Id { get; set; }
 
         public void Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
