@@ -28,6 +28,20 @@ namespace Test
         }
 
         [Fact]
+        public void WhenGameFinish_ThenRunShouldThrowGameOver()
+        {
+            var gameFixture = new GameFixture();
+            var game = gameFixture.CreateGame();
+            gameFixture.StartAnyGame(1);
+
+            var anonymousUsersInGame = new List<UserInGame>{new UserInGame(1, 1)};
+
+            game.Run(anonymousUsersInGame);
+
+            Assert.Throws<GameOverException>(() => game.Run(anonymousUsersInGame));
+        }
+
+        [Fact]
         public void WhenLastRoundOfGame_ShouldLastPropertyFalse()
         {
             var gameFixture = new GameFixture();

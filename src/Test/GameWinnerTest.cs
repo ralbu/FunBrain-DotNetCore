@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FunBrainDomain;
 using Test.Fixtures;
+using Test.Stubs;
 using Xunit;
 
 namespace Test

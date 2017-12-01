@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FunBrainDomain;
+using Test.Stubs;
 
 namespace Test.Fixtures
 {

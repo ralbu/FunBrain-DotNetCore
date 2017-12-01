@@ -4,14 +4,14 @@ namespace FunBrainDomain
 {
     public interface IRandomGenerator
     {
-        int Generate();
+        int Generate(int maxGenerator);
     }
 
     public class RandomGenerator: IRandomGenerator
     {
-        public int Generate()
+        public int Generate(int maxGenerator)
         {
-            var random = new Random().Next(0, 100);
+            var random = new Random().Next(0, maxGenerator);
             return random;
         }
     }

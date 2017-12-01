@@ -9,6 +9,7 @@ namespace FunBrainDomain
         private readonly IRandomGenerator _randomGenerator;
         private IEnumerable<int> _usersInGame;
         private bool _gameStarted = false;
+        private int _maxGuessNo;
 
         public Game(IRandomGenerator randomGenerator)
         {
@@ -48,6 +49,7 @@ namespace FunBrainDomain
             }
 
             _gameStarted = true;
+            _maxGuessNo = maxGuessNo;
 
             TotalRounds = noOfRounds;
             RoundsLeft = noOfRounds;
@@ -58,7 +60,12 @@ namespace FunBrainDomain
         {
             if (!_gameStarted) throw new GameNotStartedException();
 
-            var randomNumber = _randomGenerator.Generate();
+            if (TotalRounds == CurrentRound)
+            {
+                throw new GameOverException(); 
+            }
+
+            var randomNumber = _randomGenerator.Generate(_maxGuessNo);
 
             var winner = userGames
                 .Select(u =>

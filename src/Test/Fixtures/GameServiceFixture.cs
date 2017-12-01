@@ -1,6 +1,7 @@
 ﻿using FunBrainInfrastructure;
 using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
+using Test.Stubs;
 
 namespace Test.Fixtures
 {

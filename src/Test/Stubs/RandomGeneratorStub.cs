@@ -1,6 +1,6 @@
 using FunBrainDomain;
 
-namespace Test
+namespace Test.Stubs
 {
     internal class RandomGeneratorStub : IRandomGenerator
     {
@@ -12,6 +12,11 @@ namespace Test
         }
 
         public int Generate()
+        {
+            return _randomNumber;
+        }
+
+        public int Generate(int maxGenerator)
         {
             return _randomNumber;
         }

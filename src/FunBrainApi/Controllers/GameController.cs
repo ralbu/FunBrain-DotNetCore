@@ -50,6 +50,10 @@ namespace FunBrainApi.Controllers
             {
                 return NotFound($"Game {gameId} not found");
             }
+            catch (GameOverException)
+            {
+                return BadRequest("Game Over");
+            }
 
 //            var roundResult = _gameService.RunGame(gameId, usersInGame);
 //            if (roundResult == null)
