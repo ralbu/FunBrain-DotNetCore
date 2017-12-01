@@ -1,27 +1,17 @@
 using FunBrainDomain;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Test.Fixtures;
 using Xunit;
 
 namespace Test
 {
     public class GameTest
     {
-        private Game CreateGame(IRandomGenerator randomGenerator = null)
-        {
-            if (randomGenerator == null)
-            {
-                randomGenerator = new RandomGeneratorStub(0);
-            }
-
-            return new Game(randomGenerator);
-        }
-
         [Fact]
         public void WhenStartingNewGame_ThenDoNotAllowZeroRounds()
         {
-            var game = CreateGame();
+            var game = new GameFixture().CreateGame();
             var guessMaxAnonymous = 1;
             var rounds = 0;
 
@@ -29,14 +19,38 @@ namespace Test
         }
 
         [Fact]
+        public void DoNotRunGame_IfNotStartGameFirst()
+        {
+            var gameFixture = new GameFixture();
+            var game = new GameFixture().CreateGame();
+
+            Assert.Throws<GameNotStartedException>(() => game.Run(gameFixture.GetUsersInGame()));
+        }
+
+        [Fact]
+        public void WhenLastRoundOfGame_ShouldLastPropertyFalse()
+        {
+            var gameFixture = new GameFixture();
+            var game = gameFixture.CreateGame();
+
+            gameFixture.StartAnyGame(2);
+
+            var round1 = game.Run(gameFixture.GetUsersInGame());
+            Assert.False(round1.LastRound);
+
+            var round2 = game.Run(gameFixture.GetUsersInGame());
+            Assert.True(round2.LastRound);
+        }
+
+        [Fact]
         public void WhenStartingNewGame_ThenDoNotAllowZeroMaxGuessNo()
         {
-            var game = CreateGame();
+            var game = new GameFixture().CreateGame();
             var guessMax = 0;
             var roundsAnonymous = 1;
 
             Assert.Throws<ArgumentException>(() =>
-                game.Start(roundsAnonymous, guessMax, new List<int>())); //List<int> can be null
+                game.Start(roundsAnonymous, guessMax, new List<int>()));
         }
 
         [Fact]
@@ -44,69 +58,22 @@ namespace Test
         {
             var expectedRounds = 5;
             var guessMaxAnonymous = 10;
-            var game = CreateGame();
-            game.Start(expectedRounds, guessMaxAnonymous, new List<int>()); // null last param
+            var game = new GameFixture().CreateGame();
+            game.Start(expectedRounds, guessMaxAnonymous, new List<int>());
 
-            Assert.Equal(expectedRounds, game.Rounds);
-        }
-
-        [Theory]
-        [InlineData(4, 3)]
-        [InlineData(1, 0)]
-        [InlineData(148947243, 148947242)]
-        public void WhenRunTheGame_ThenCurrentRoundShouldIncrease(int totalRounds, int expectedRounds)
-        {
-            var sut = new Game(new RandomGeneratorStub(5));
-            sut.Start(totalRounds, 1, new List<int>()); // null last param
-            var actualResult = sut.Run(new List<UserInGame> {new UserInGame(1, 2)});
-
-//            Assert.Equal(expectedRounds + 1, sut.CurrentRound);
-
-
-            //TODO: fix this
-//            Assert.Equal(expectedRounds, actualResult.RoundsLeft);
-        }
-
-        [Fact] // This test already above
-        public void WhenRunTheGame_ThenTotalNoOfRoundsShouldNotChange()
-        {
-//           var sut = new Game(new RandomGeneratorStub(1)); 
-//            sut.Start(5, 1, null);
-//            var actualResult = sut.Run(new List<UserInGame> {new UserInGame(1, 2)});
-        }
-
-
-        [Fact]
-        public void Game()
-        {
-            var game = new Game(new RandomGeneratorStub(3));
-            var userGames = new List<UserInGame>
-            {
-                new UserInGame(1, 4),
-                new UserInGame(2, 8)
-            };
-
-            var actuaResult = game.Run(userGames);
-
-            Assert.Equal(1, actuaResult.WinnerId);
+            Assert.Equal(expectedRounds, game.TotalRounds);
         }
 
         [Fact]
-        public void Game2()
+        public void WhenRunTheGame_ThenCurrentRoundShouldIncrease()
         {
-            var game = new Game(new RandomGeneratorStub(81));
-            var userGames = new List<UserInGame>
-            {
-                new UserInGame(1, 14),
-                new UserInGame(2, 20),
-                new UserInGame(3, 50),
-                new UserInGame(4, 1),
-                new UserInGame(5, 98)
-            };
+            var gameFixture = new GameFixture();
+            var game = gameFixture.CreateGame();
+            gameFixture.StartAnyGame();
 
-            var actuaResult = game.Run(userGames);
+            game.Run(gameFixture.GetUsersInGame());
 
-            Assert.Equal(5, actuaResult.WinnerId);
+            Assert.Equal(1, game.CurrentRound);
         }
     }
 }

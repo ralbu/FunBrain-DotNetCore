@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunBrainDomain;
 using FunBrainInfrastructure;
 using FunBrainInfrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace FunBrainApi.Controllers
 {
     [Route("api/game")]
-    public class GameController: Controller
+    public class GameController : Controller
     {
-        private readonly IGameService _gameService;
+        private readonly GameService _gameService;
+        private readonly RoundOfGame _roundOfGame;
 
-        public GameController(IGameService gameService)
+        public GameController(GameService gameService, RoundOfGame roundOfGame)
         {
             _gameService = gameService;
+            _roundOfGame = roundOfGame;
         }
 
         public IActionResult Get()
@@ -36,8 +39,18 @@ namespace FunBrainApi.Controllers
 
 
         [HttpPost("run/{gameId}")]
-        public IActionResult Run(int gameId, [FromBody] IEnumerable<UserInGameObsolete> usersInGame)
+        public IActionResult Run(Guid gameId, [FromBody] IEnumerable<UserInGame> usersInGame)
         {
+            try
+            {
+                var round = _roundOfGame.RunGame(gameId, usersInGame);
+                return Ok(round);
+            }
+            catch (GameNotFoundException)
+            {
+                return NotFound($"Game {gameId} not found");
+            }
+
 //            var roundResult = _gameService.RunGame(gameId, usersInGame);
 //            if (roundResult == null)
 //            {
@@ -45,7 +58,7 @@ namespace FunBrainApi.Controllers
 //            }
 
 //            return Ok(roundResult);
-            return Ok();
+//            return Ok();
         }
     }
 }

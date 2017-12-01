@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using FunBrainDomain;
 using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
+using Test.Fixtures;
 using Xunit;
 
 namespace Test
@@ -9,14 +11,8 @@ namespace Test
     public class ApplicationIntegrationTest
     {
         [Fact]
-        public void Test()
+        public void whenCreatingNewGame_ThenShouldCreateGameId()
         {
-            var gameRepository = new GameRepositoryInMemory();
-            var randomGeneratorStub = new RandomGeneratorStub(10);
-            var unitOfWorkStub = new UnitOfWorkStub();
-
-            var gameService = new GameService(gameRepository, randomGeneratorStub, unitOfWorkStub);
-
             var newGameRequest = new NewGameRequest
             {
                 MaxGuessNo = 10,
@@ -24,25 +20,83 @@ namespace Test
                 UsersInGame = new[] {1, 2}
             };
 
+            var gameService = new GameServiceFixture().CreateGameService();
+
+            var gameId = gameService.Create(newGameRequest);
+
+            Assert.NotEqual(Guid.Empty, gameId);
+        }
+
+        [Fact]
+        public void WhenRunGame_ThenSouldCreateRound()
+        {
+            var newGameRequest = new NewGameRequest
+            {
+                MaxGuessNo = 10,
+                NoOfRounds = 1,
+                UsersInGame = new[] {1, 2}
+            };
+
+            var gameServiceFixture = new GameServiceFixture();
+            var gameService = gameServiceFixture.CreateGameService();
 
             var gameId = gameService.Create(newGameRequest);
 
             Assert.NotEqual(Guid.Empty, gameId);
 
-            //NEw test
-
-            var usersInGame = new UserInGame[]
+            var usersInGame = new[]
             {
                 new UserInGame(1, 5),
-                new UserInGame (2, 20)
+                new UserInGame(2, 20)
             };
 
             var roundRepository = new RoundRepositoryInMemory();
-            var roundOfGame = new RoundOfGame(gameRepository, roundRepository, unitOfWorkStub);
+            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository, gameServiceFixture.UnitOfWork);
 
             var round = roundOfGame.RunGame(gameId, usersInGame);
 
             Assert.NotNull(round);
+        }
+
+        [Fact]
+        public void WhenGameFinishes_ThenShouldSelectTheWinner()
+        {
+            var expectedGuessNo = 10;
+
+            var gameServiceFixture = new GameServiceFixture();
+            var gameService = gameServiceFixture.CreateGameService();
+
+            var newGameRequest = new NewGameRequest
+            {
+                MaxGuessNo = 10,
+                NoOfRounds = 3,
+                UsersInGame = new[] {1, 2, 3}
+            };
+
+            var gameId = gameService.Create(newGameRequest);
+
+            var roundRepository = new RoundRepositoryInMemory();
+
+            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository, gameServiceFixture.UnitOfWork);
+            var expectedNonWinner = new UserInGame(1, expectedGuessNo);
+            var expectedWinner = new UserInGame(2, expectedGuessNo - 4);
+            var usersInGame = new List<UserInGame>
+            {
+                expectedNonWinner,
+                expectedWinner,
+                new UserInGame(3, expectedGuessNo - 5)
+            };
+
+            roundOfGame.RunGame(gameId, usersInGame);
+            expectedNonWinner.Number = expectedGuessNo - 5;
+            expectedWinner.Number = expectedGuessNo;
+
+            roundOfGame.RunGame(gameId, usersInGame);
+            roundOfGame.RunGame(gameId, usersInGame);
+
+            var gameWinner = gameService.GetGameWinner(gameId);
+
+            Assert.Equal(expectedWinner.UserId, gameWinner);
         }
     }
 }

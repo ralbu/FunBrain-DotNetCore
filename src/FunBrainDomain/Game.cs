@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FunBrainDomain
 {
-
     public class Game
     {
         private readonly IRandomGenerator _randomGenerator;
-        private int _maxGuessNo;
-        private IEnumerable<User> _usersInGameObsolete;
         private IEnumerable<int> _usersInGame;
-
-        // TODO: Do I need this?
-        [Obsolete]
-        public Game()
-        {
-        }
+        private bool _gameStarted = false;
 
         public Game(IRandomGenerator randomGenerator)
         {
@@ -26,19 +16,25 @@ namespace FunBrainDomain
             _randomGenerator = randomGenerator;
         }
 
-        [Obsolete]
-        public Game(Guid gameId, IRandomGenerator randomGenerator)
-        {
-            Id = gameId;
-            _randomGenerator = randomGenerator;
-        }
-
-
-        public int Rounds { get; private set; }
+        public Guid Id { get; }
+        public int TotalRounds { get; private set; }
         public int RoundsLeft { get; private set; }
         public int CurrentRound { get; set; }
-        public User GameWinner { get; set; }
-        public Guid Id { get; set; }
+        public List<Round> Rounds { get; } = new List<Round>();
+
+        public int GameWinnerId
+        {
+            get
+            {
+                return Rounds
+                    .GroupBy(r => r.WinnerId)
+                    .ToDictionary(g => g.Key, g => g.ToList())
+                    .OrderByDescending(g => g.Value.Count)
+                    .First()
+                    .Key;
+            }
+        }
+
 
         public void Start(int noOfRounds, int maxGuessNo, IEnumerable<int> usersInGame)
         {
@@ -51,34 +47,17 @@ namespace FunBrainDomain
                 throw new ArgumentException("Max Guess No should be greater than zero.");
             }
 
+            _gameStarted = true;
 
-            Rounds = noOfRounds;
+            TotalRounds = noOfRounds;
             RoundsLeft = noOfRounds;
-            _maxGuessNo = maxGuessNo;
             _usersInGame = usersInGame;
         }
 
-        public void Start(int noOfRounds, int maxGuessNo, IEnumerable<User> usersInGame)
-        {
-            if (noOfRounds <= 0)
-            {
-                throw new ArgumentException("Number of rounds should be greater than zero.");
-            }
-            if (maxGuessNo <= 0)
-            {
-                throw new ArgumentException("Max Guess No should be greater than zero.");
-            }
-
-
-            Rounds = noOfRounds;
-            RoundsLeft = noOfRounds;
-            _maxGuessNo = maxGuessNo;
-            _usersInGameObsolete = usersInGame;
-        }
-
-
         public Round Run(IEnumerable<UserInGame> userGames)
         {
+            if (!_gameStarted) throw new GameNotStartedException();
+
             var randomNumber = _randomGenerator.Generate();
 
             var winner = userGames
@@ -94,8 +73,13 @@ namespace FunBrainDomain
             CurrentRound++;
 
             RoundsLeft--;
+            var lastRound = TotalRounds == CurrentRound;
 
-            return new Round(this.Id, randomNumber, winner.Id, CurrentRound);
+            var newRound = new Round(Id, randomNumber, winner.Id, CurrentRound, lastRound);
+
+            Rounds.Add(newRound);
+
+            return newRound;
         }
     }
 }

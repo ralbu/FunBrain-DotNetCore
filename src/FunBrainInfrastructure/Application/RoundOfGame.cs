@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FunBrainDomain;
 using FunBrainInfrastructure.Repositories;
 
@@ -22,7 +19,7 @@ namespace FunBrainInfrastructure.Application
             _unitOfWork = unitOfWork;
         }
 
-        public Round RunGame(Guid gameId, IEnumerable<UserInGame> userInGame)
+        public Round RunGame(Guid gameId, IEnumerable<UserInGame> usersInGame)
         {
             var game = _gameRepository.FindById(gameId);
 
@@ -31,7 +28,7 @@ namespace FunBrainInfrastructure.Application
                 throw new GameNotFoundException();
             }
 
-            var round = game.Run(userInGame);
+            var round = game.Run(usersInGame);
 
             // Update game because updating No of rounds
             _gameRepository.UpdateGame(game);

@@ -45,7 +45,9 @@ namespace FunBrainApi
             services.AddTransient<IUserRankingService, UserRankingService>();
             services.AddTransient<IUserRankingRepository, UserRankingRepository>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<GameService>();
+            services.AddTransient<RoundOfGame>();
 
             var iocContainerType = Configuration["appSettings:ioccontainer"];
             if (String.IsNullOrWhiteSpace(iocContainerType))
@@ -58,6 +60,7 @@ namespace FunBrainApi
                 case "memory":
                     services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
                     services.AddSingleton<IGameRepository, GameRepositoryInMemory>();
+                    services.AddSingleton<IRoundRepository, RoundRepositoryInMemory>();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"Can't resolve DI for the type '{iocContainerType}. Check the appSettings file.");

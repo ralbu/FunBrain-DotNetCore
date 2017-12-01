@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using FunBrainDomain;
 using FunBrainInfrastructure.Repositories;
 
@@ -29,6 +28,13 @@ namespace FunBrainInfrastructure.Application
             _unitOfWork.Commit();
 
             return game.Id;
+        }
+
+        public int GetGameWinner(Guid gameId)
+        {
+            var game = _gameRepository.FindById(gameId);
+
+            return game.GameWinnerId;
         }
 
     }
