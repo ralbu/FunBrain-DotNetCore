@@ -62,6 +62,10 @@ namespace FunBrainApi
                     services.AddSingleton<IGameRepository, GameRepositoryInMemory>();
                     services.AddSingleton<IRoundRepository, RoundRepositoryInMemory>();
                     break;
+                case "hard-coded":
+                    services.AddSingleton<IUserRepository, UserRepositoryHardCoded>();
+                    break;
+                    ;
                 default:
                     throw new ArgumentOutOfRangeException($"Can't resolve DI for the type '{iocContainerType}. Check the appSettings file.");
             }
@@ -78,7 +82,9 @@ namespace FunBrainApi
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://localhost:4200");
+                builder.WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://localhost:8080");
+
             });
             app.UseMvc();
 
