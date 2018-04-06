@@ -8,11 +8,13 @@ using FunBrainInfrastructure.Models;
 
 namespace FunBrainInfrastructure.Repositories
 {
-    public class UserRepositoryHardCoded: IUserRepository
+    public class UserRepositoryHardCoded : IUserRepository
     {
-        public IEnumerable<User> Get()
+        private List<User> _users;
+
+        public UserRepositoryHardCoded()
         {
-            return new List<User>
+            _users = new List<User>
             {
                 new User {Id = 1, Name = "User 1", Email = "user1@email.com"},
                 new User {Id = 2, Name = "User 2", Email = "user2@email.com"},
@@ -21,9 +23,14 @@ namespace FunBrainInfrastructure.Repositories
             };
         }
 
+        public IEnumerable<User> Get()
+        {
+            return _users;
+        }
+
         public User GetById(int id)
         {
-            throw new NotImplementedException();
+            return _users.FirstOrDefault(user => user.Id == id);
         }
 
         public User Create(UserCreate newUser)
