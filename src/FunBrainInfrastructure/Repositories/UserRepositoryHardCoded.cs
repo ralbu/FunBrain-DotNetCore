@@ -40,7 +40,11 @@ namespace FunBrainInfrastructure.Repositories
 
         public User Update(UserUpdate updateUser)
         {
-            throw new NotImplementedException();
+            var userToUpdate = _users.FirstOrDefault(user => user.Id == updateUser.Id);
+            userToUpdate.Name = updateUser.Name;
+            userToUpdate.Email = updateUser.Email;
+
+            return userToUpdate;
         }
 
         public bool Delete(int userId)
