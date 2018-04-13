@@ -79,13 +79,22 @@ namespace FunBrainApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder =>
+            {
+                builder
+                .WithOrigins("http://localhost:4200", "http://localhost:8080")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
+/*
             app.UseCors(builder =>
             {
                 builder.WithOrigins("http://localhost:4200")
-                    .WithOrigins("http://localhost:8080");
+                    .WithOrigins("http://localhost:8080").AllowAnyMethod();
 
             });
+*/
             app.UseMvc();
 
 
