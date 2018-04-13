@@ -35,12 +35,16 @@ namespace FunBrainInfrastructure.Repositories
 
         public User Create(UserCreate newUser)
         {
-            throw new NotImplementedException();
+            var userToCreate = newUser.ToUser(_users.Count + 1);
+            _users.Add(userToCreate);
+
+            return userToCreate;
+
         }
 
-        public User Update(UserUpdate updateUser)
+        public User Update(int userId, UserUpdate updateUser)
         {
-            var userToUpdate = _users.FirstOrDefault(user => user.Id == updateUser.Id);
+            var userToUpdate = _users.FirstOrDefault(user => user.Id == userId);
             userToUpdate.Name = updateUser.Name;
             userToUpdate.Email = updateUser.Email;
 

@@ -9,7 +9,7 @@ namespace FunBrainInfrastructure.Repositories
         IEnumerable<User> Get();
         User GetById(int id);
         User Create(UserCreate newUser);
-        User Update(UserUpdate updateUser);
+        User Update(int id, UserUpdate updateUser);
         bool Delete(int userId);
     }
 }

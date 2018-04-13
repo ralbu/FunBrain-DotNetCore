@@ -21,19 +21,14 @@ namespace FunBrainInfrastructure.Repositories
 
         public User Create(UserCreate newUser)
         {
-            var createdUser = new User
-            {
-                Id = Users.Count + 1,
-                Name = newUser.Name,
-                Email = newUser.Email
-            };
+            var userToCreate = newUser.ToUser(Users.Count + 1);
 
-            Users.Add(createdUser);
+            Users.Add(userToCreate);
 
-            return createdUser;
+            return userToCreate;
         }
 
-        public User Update(UserUpdate updateUser)
+        public User Update(int id, UserUpdate updateUser)
         {
             if (updateUser == null)
             {
@@ -41,7 +36,7 @@ namespace FunBrainInfrastructure.Repositories
             }
 
             // First? or default?
-            var userToUpdate = Users.FirstOrDefault(u => u.Id == updateUser.Id);
+            var userToUpdate = Users.FirstOrDefault(u => u.Id == id);
 
             if (userToUpdate == null)
             {

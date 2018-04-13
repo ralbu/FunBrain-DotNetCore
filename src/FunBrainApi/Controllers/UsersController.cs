@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FunBrainDomain;
-using FunBrainInfrastructure;
+﻿using System.Linq;
 using FunBrainInfrastructure.Models;
 using FunBrainInfrastructure.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
@@ -55,10 +52,10 @@ namespace FunBrainApi.Controllers
             return CreatedAtRoute("GetUser", new {id = createdUser.Id }, createdUser);
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] UserUpdate updateUser)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] UserUpdate updateUser)
         {
-            var updatedUser = _userRepository.Update(updateUser);
+            var updatedUser = _userRepository.Update(id, updateUser);
 
             if (updatedUser == null)
             {
@@ -91,7 +88,7 @@ namespace FunBrainApi.Controllers
             patchDoc.ApplyTo(userToPatch);
             userToPatch.Id = id;
 
-            _userRepository.Update(userToPatch);
+            _userRepository.Update(id, userToPatch);
 
             return NoContent();
         }
