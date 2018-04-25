@@ -53,7 +53,12 @@ namespace FunBrainInfrastructure.Repositories
 
         public bool Delete(int userId)
         {
-            throw new NotImplementedException();
+            var userToDelete = _users.FirstOrDefault(user => user.Id == userId);
+            if (userToDelete == null) return false;
+
+            _users.Remove(userToDelete);
+
+            return true;
         }
     }
 }
