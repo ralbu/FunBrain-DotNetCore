@@ -19,6 +19,11 @@ namespace FunBrainInfrastructure.Repositories
             return Users.FirstOrDefault(u => u.Id == id);
         }
 
+        public IEnumerable<User> GetByIds(IEnumerable<int> users)
+        {
+            return Users.Where(u => users.Contains(u.Id));
+        }
+
         public User Create(UserCreate newUser)
         {
             var userToCreate = newUser.ToUser(Users.Count + 1);

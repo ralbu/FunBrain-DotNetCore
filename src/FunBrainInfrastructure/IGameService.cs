@@ -11,5 +11,6 @@ namespace FunBrainInfrastructure
     {
         RoundResult RunGame(Guid gameId, IEnumerable<UserInGameObsolete> userInGame);
         Guid Create(NewGameRequest command);
+        IEnumerable<User> GetUsersInGame(Guid gameId);
     }
 }

@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "FunBrain",
-		"_postman_id": "e58bf763-216b-e6eb-1523-2f4ee05ce0b0",
+		"_postman_id": "dc6f2f8d-74c1-6db3-5b9c-6029e3a064f1",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -131,6 +131,17 @@
 					"mode": "raw",
 					"raw": "[{\n\t\"userid\":1,\n\t\"number\": 19\n},\n{\n\t\"userid\": 2,\n\t\"number\": 44\n}]\n"
 				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users in game",
+			"request": {
+				"url": "http://localhost:64884/api/game/5912ee42-ecab-46c6-b8e9-acff465baf38/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
 				"description": ""
 			},
 			"response": []

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using AutoFixture;
 using FunBrainDomain;
 using FunBrainInfrastructure.Application;
 using FunBrainInfrastructure.Repositories;
@@ -10,6 +12,8 @@ namespace Test
 {
     public class ApplicationIntegrationTest
     {
+        private readonly Fixture _fixture = new Fixture();
+
         [Fact]
         public void whenCreatingNewGame_ThenShouldCreateGameId()
         {
@@ -51,7 +55,8 @@ namespace Test
             };
 
             var roundRepository = new RoundRepositoryInMemory();
-            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository, gameServiceFixture.UnitOfWork);
+            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository,
+                gameServiceFixture.UnitOfWork);
 
             var round = roundOfGame.RunGame(gameId, usersInGame);
 
@@ -77,7 +82,8 @@ namespace Test
 
             var roundRepository = new RoundRepositoryInMemory();
 
-            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository, gameServiceFixture.UnitOfWork);
+            var roundOfGame = new RoundOfGame(gameServiceFixture.GameRepository, roundRepository,
+                gameServiceFixture.UnitOfWork);
             var expectedNonWinner = new UserInGame(1, expectedGuessNo);
             var expectedWinner = new UserInGame(2, expectedGuessNo - 4);
             var usersInGame = new List<UserInGame>
@@ -97,6 +103,38 @@ namespace Test
             var gameWinner = gameService.GetGameWinner(gameId);
 
             Assert.Equal(expectedWinner.UserId, gameWinner);
+        }
+
+        [Fact]
+        public void WhenGameStarted_ShouldReturnUsersInGame()
+        {
+            var gameServiceFixture = new GameServiceFixture();
+            var expectedUsers = _fixture.CreateMany<User>().ToList();
+
+            var gameService = gameServiceFixture
+                .WithUsers(expectedUsers)
+                .CreateGameService();
+
+            var gameRequest = new NewGameRequest
+            {
+                MaxGuessNo = 1,
+                NoOfRounds = 1,
+                UsersInGame = expectedUsers.Select(u => u.Id)
+            };
+
+            var gameId = gameService.Create(gameRequest);
+
+            var users = gameService.GetUsersInGame(gameId).ToList();
+
+            Assert.True(users.Count() > 1);
+
+            expectedUsers.ForEach(eu =>
+            {
+                var actualUser = users.First(au => au.Id == eu.Id);
+
+                Assert.Equal(eu, actualUser, new UserComparer());
+            });
+
         }
     }
 }

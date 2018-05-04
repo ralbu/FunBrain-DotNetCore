@@ -64,5 +64,19 @@ namespace FunBrainApi.Controllers
 //            return Ok(roundResult);
 //            return Ok();
         }
+
+        [HttpGet("{gameId}/users")]
+        public IActionResult GetUsersInGame(Guid gameId)
+        {
+            try
+            {
+                var usersInGame = _gameService.GetUsersInGame(gameId);
+                return Ok(usersInGame);
+            }
+            catch (GameNotFoundException)
+            {
+                return NotFound($"Game {gameId} not found");
+            }
+        }
     }
 }

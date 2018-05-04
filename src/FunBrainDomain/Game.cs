@@ -23,6 +23,8 @@ namespace FunBrainDomain
         public int CurrentRound { get; set; }
         public List<Round> Rounds { get; } = new List<Round>();
 
+        public IEnumerable<int> UsersInGame => _usersInGame;
+
         public int GameWinnerId
         {
             get

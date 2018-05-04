@@ -33,6 +33,11 @@ namespace FunBrainInfrastructure.Repositories
             return _users.FirstOrDefault(user => user.Id == id);
         }
 
+        public IEnumerable<User> GetByIds(IEnumerable<int> users)
+        {
+            throw new NotImplementedException();
+        }
+
         public User Create(UserCreate newUser)
         {
             var userToCreate = newUser.ToUser(_users.Count + 1);
